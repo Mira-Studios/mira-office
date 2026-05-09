@@ -2,10 +2,6 @@
 node_modules/
 website/node_modules/
 
-# Build outputs
-dist/
-website/dist/
-*.exe
 
 # Go
 *.sum
