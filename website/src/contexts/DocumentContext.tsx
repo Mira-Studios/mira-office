@@ -155,7 +155,7 @@ export function DocumentProvider({ children }: { children: ReactNode }) {
               id: 1,
               fontSize: 14,
               content: [{ text: '', formatting: {} }],
-              alignment: 'left'
+              alignment: 'left' as const
             }]
 
         const maxBlockId = normalizedBlocks.reduce((max, block) => Math.max(max, block.id), 0)

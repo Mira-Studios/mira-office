@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { OfficeLayout } from '../components/OfficeLayout'
-import { Settings, User, Palette, Bell, Shield } from 'lucide-react'
+import { User, Palette, Bell, Shield } from 'lucide-react'
 
 export const Route = createFileRoute('/settings')({
   component: SettingsComponent,

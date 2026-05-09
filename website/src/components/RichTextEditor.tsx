@@ -138,7 +138,7 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const editorRef      = useRef<HTMLDivElement>(null)
   const isFocusedRef   = useRef(false)
-  const lastBlockIdRef = useRef<string | undefined>(undefined)
+  const lastBlockIdRef = useRef<number | undefined>(undefined)
 
   // ── Mount / block-switch: set innerHTML once, never again while typing ──────
   useEffect(() => {

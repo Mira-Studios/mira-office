@@ -3,14 +3,16 @@ import { OfficeLayout } from '../components/OfficeLayout'
 import typeIcon from '../assets/type-icon.webp'
 import deckIcon from '../assets/deck-icon.webp'
 import matrixIcon from '../assets/matrix-icon.webp'
-import { FileText, Presentation, Grid3x3, Plus } from 'lucide-react'
+import { FileText, Presentation, Grid3x3 } from 'lucide-react'
 
 export const Route = createFileRoute('/home')({
   component: HomeComponent,
 })
 
 // Mock data for all documents
-const mockDocuments = [
+type DocType = 'type' | 'deck' | 'matrix'
+
+const mockDocuments: Array<{ id: string; title: string; modified: string; type: DocType; app: string }> = [
   { id: '1', title: 'Project Proposal', modified: '2024-01-15', type: 'type', app: 'Mira Type' },
   { id: '2', title: 'Q4 Business Review', modified: '2024-01-14', type: 'deck', app: 'Mira Deck' },
   { id: '3', title: 'Budget 2024', modified: '2024-01-13', type: 'matrix', app: 'Mira Matrix' },
@@ -19,7 +21,7 @@ const mockDocuments = [
   { id: '6', title: 'Sales Data', modified: '2024-01-10', type: 'matrix', app: 'Mira Matrix' },
 ]
 
-const getAppIcon = (type: string) => {
+const getAppIcon = (type: DocType) => {
   switch (type) {
     case 'type': return typeIcon
     case 'deck': return deckIcon
@@ -28,7 +30,7 @@ const getAppIcon = (type: string) => {
   }
 }
 
-const getAppIconComponent = (type: string) => {
+const getAppIconComponent = (type: DocType) => {
   switch (type) {
     case 'type': return FileText
     case 'deck': return Presentation
@@ -116,10 +118,11 @@ function HomeComponent() {
             const appLogo = getAppIcon(doc.type)
             
             return (
-              <Link
-                key={doc.id}
-                to={`/${doc.type}/${doc.id}`}
-                className="card"
+                    <Link
+                      key={doc.id}
+                      to={doc.type === 'type' ? '/type/$id' : doc.type === 'deck' ? '/deck/$id' : '/matrix/$id'}
+                      params={{ id: doc.id }}
+                      className="card"
                 style={{
                   textDecoration: 'none',
                   padding: '1.5rem',

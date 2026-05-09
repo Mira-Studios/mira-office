@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Save, Download, Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, Type, List, ListOrdered, ZoomIn, ZoomOut } from 'lucide-react'
+import { Save, Download, Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, ZoomIn, ZoomOut } from 'lucide-react'
 import { useToolbar } from '../../contexts/ToolbarContext'
 import { useDocument } from '../../contexts/DocumentContext'
 import { useEffect, useState, useRef } from 'react'
@@ -13,9 +13,7 @@ export const Route = createFileRoute('/type/$id')({
 function TypeIdComponent() {
   const { id } = Route.useParams()
   const { setToolbar } = useToolbar()
-  const { document: doc, updateTitle, exportDocument, addBlock, updateBlock, setPageBlocks } = useDocument()
-  const [title, setTitle] = useState(doc.metadata.title)
-  const [focusedBlockId, setFocusedBlockId] = useState<number | undefined>()
+  const { document: doc, setPageBlocks } = useDocument()
   const [zoomLevel, setZoomLevel] = useState(100)
   
   console.log('TypeIdComponent rendered with ID:', id)
@@ -25,8 +23,6 @@ function TypeIdComponent() {
     function TypeToolbar() {
       const { document: doc, updateTitle: doUpdateTitle, exportDocument: doExport } = useDocument()
       const [titleLocal, setTitleLocal] = useState(doc.metadata.title)
-      const [zoomLocal, setZoomLocal] = useState(100)
-      const [fontSizeLocal, setFontSizeLocal] = useState<number>(14)
       const [fontSizeRaw, setFontSizeRaw] = useState<string>(String(14))
       const [isBold, setIsBold] = useState(false)
       const [isItalic, setIsItalic] = useState(false)
@@ -81,7 +77,6 @@ function TypeIdComponent() {
 
           // Avoid clobbering typed input while the font-size input has focus
           if (found) {
-            setFontSizeLocal(found)
             if (window.document.activeElement !== inputRef.current) {
               setFontSizeRaw(String(found))
             }
@@ -266,7 +261,6 @@ function TypeIdComponent() {
                   const parsed = parseFloat(fontSizeRaw)
                   if (!Number.isNaN(parsed)) {
                     applyFontSize(parsed)
-                    setFontSizeLocal(parsed)
                     setFontSizeRaw(String(parsed))
                   }
                   e.preventDefault()
@@ -276,7 +270,6 @@ function TypeIdComponent() {
                 const parsed = parseFloat(fontSizeRaw)
                 if (!Number.isNaN(parsed)) {
                   applyFontSize(parsed)
-                  setFontSizeLocal(parsed)
                   setFontSizeRaw(String(parsed))
                 }
               }}
@@ -295,8 +288,8 @@ function TypeIdComponent() {
 
             <button 
               className="icon-btn"
-              onClick={() => setZoomLocal(Math.max(50, zoomLocal - 10))}
-              disabled={zoomLocal <= 50}
+              onClick={() => setZoomLevel(Math.max(50, zoomLevel - 10))}
+              disabled={zoomLevel <= 50}
             >
               <ZoomOut size={16} />
             </button>
@@ -306,12 +299,12 @@ function TypeIdComponent() {
               minWidth: '3rem',
               textAlign: 'center'
             }}>
-              {zoomLocal}%
+              {zoomLevel}%
             </span>
             <button 
               className="icon-btn"
-              onClick={() => setZoomLocal(Math.min(200, zoomLocal + 10))}
-              disabled={zoomLocal >= 200}
+              onClick={() => setZoomLevel(Math.min(200, zoomLevel + 10))}
+              disabled={zoomLevel >= 200}
             >
               <ZoomIn size={16} />
             </button>
