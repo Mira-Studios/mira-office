@@ -1,0 +1,19 @@
+{
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "devPath": "src",
+    "distDir": "program/dist"
+  },
+  "package": {
+    "productName": "Mira Office",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "bundle": {
+      "identifier": "com.mira.mira-office",
+      "icon": ["icons/icon.ico", "icons/icon.icns", "icons/icon.png"],
+      "resources": []
+    }
+  }
+}

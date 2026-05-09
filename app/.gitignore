@@ -1,0 +1,5 @@
+node_modules/
+dist/
+program/dist/
+src-tauri/target/
+**/*.rs.bk

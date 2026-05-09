@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Mira Office — loading</title>
+    <style>body{font-family:system-ui,Segoe UI,Helvetica,Arial;margin:0;display:flex;align-items:center;justify-content:center;height:100vh}#box{max-width:640px;text-align:center}</style>
+  </head>
+  <body>
+    <div id="box">
+      <h2>Loading Mira Office…</h2>
+      <p id="status">Checking for updates and preparing content.</p>
+    </div>
+    <script>
+      // Try to navigate to the downloaded site once available.
+      function tryLoad() {
+        try {
+          // attempt a fetch; if assets:// is available the site will load
+          fetch('assets://index.html').then(r=>{
+            if (r.ok) window.location.replace('assets://index.html');
+            else setTimeout(tryLoad, 1000);
+          }).catch(()=>setTimeout(tryLoad, 1000));
+        } catch(e) { setTimeout(tryLoad, 1000); }
+      }
+      tryLoad();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "mira-office-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.2.0"
+  }
+}

@@ -4,11 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "workspaces": [
-    "website"
+    "website",
+    "app"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=website",
     "build": "npm run build --workspace=website",
-    "preview": "npm run preview --workspace=website"
+    "preview": "npm run preview --workspace=website",
+    "app:dev": "npm run dev --workspace=app",
+    "app:build": "npm run build --workspace=app",
+    "app:bundle": "npm run bundle --workspace=app"
   }
 }
