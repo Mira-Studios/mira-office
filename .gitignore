@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+website/node_modules/
+
+# Build outputs
+dist/
+website/dist/
+*.exe
+
+# Go
+*.sum
+server/go.sum
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.production
