@@ -178,7 +178,7 @@ function parseEditorBlocks(root: HTMLElement, existingBlocks: DocumentBlock[]): 
 
 export function DocumentPage({ page, onBlocksChange }: DocumentPageProps) {
   const editorRef = useRef<HTMLDivElement>(null)
-  const lastHtmlRef = useRef('')
+  const lastPageIdRef = useRef<number | undefined>(undefined)
 
   const pointsToPixels = (points: number) => (points * 96) / 72
 
@@ -194,12 +194,14 @@ export function DocumentPage({ page, onBlocksChange }: DocumentPageProps) {
     const el = editorRef.current
     if (!el) return
 
-    const nextHtml = pageToHtml(page.blocks)
-    if (nextHtml !== lastHtmlRef.current) {
-      el.innerHTML = nextHtml
-      lastHtmlRef.current = nextHtml
+    // Only rewrite the DOM when we're switching to a different page.
+    // NEVER while the user is actively typing — that would teleport
+    // the cursor back to position 0.
+    if (lastPageIdRef.current !== page.id) {
+      el.innerHTML = pageToHtml(page.blocks)
+      lastPageIdRef.current = page.id
     }
-  }, [page.blocks])
+  }, [page.id]) // intentionally omit page.blocks — we own the DOM while focused
 
   return (
     <div style={{
@@ -246,7 +248,6 @@ export function DocumentPage({ page, onBlocksChange }: DocumentPageProps) {
           }}
           onInput={(e) => {
             const root = e.currentTarget
-            lastHtmlRef.current = root.innerHTML
             onBlocksChange(page.id, parseEditorBlocks(root, page.blocks))
           }}
         />
